@@ -41,16 +41,13 @@ abstract class OneOf {
   @override
   String toString() => value.toString();
 
-  static void _throwIfInvalidInput(Object? value, int? typeIndex, Type? type) {
-    assert(value == null && typeIndex == null && type == null,
-        'Either enter a non-null value, or provide a typeIndex or type');
-  }
-
   static void _throwIfFailedAttempt(int? typeIndex) {
-    throw ArgumentError.value(
-      typeIndex,
-      "typeIndex wasn't provided, and attempts to discover it failed",
-    );
+    if (typeIndex == null) {
+      throw ArgumentError.value(
+        typeIndex,
+        "typeIndex wasn't provided, and attempts to discover it failed",
+      );
+    }
   }
 
   //constructors
@@ -63,12 +60,21 @@ abstract class OneOf {
     int? typeIndex,
     Type? type,
   }) {
-    _throwIfInvalidInput(value, typeIndex, type);
+    if (typeIndex == null) {
+      //try to determine typeIndex by checking type
+      if (type != null) {
+        if (type == T0) {
+          typeIndex = 0;
+        } else if (type == T1) {
+          typeIndex = 1;
+        }
+      }
+    }
     if (typeIndex == null) {
       //try to determine typeIndex by checking value type
-      if (value is T0 || type == T0) {
+      if (value is T0) {
         typeIndex = 0;
-      } else if (value is T1 || type == T1) {
+      } else if (value is T1) {
         typeIndex = 1;
       }
     }
@@ -81,14 +87,25 @@ abstract class OneOf {
     int? typeIndex,
     Type? type,
   }) {
-    _throwIfInvalidInput(value, typeIndex, type);
+    if (typeIndex == null) {
+      //try to determine typeIndex by checking type
+      if (type != null) {
+        if (type == T0) {
+          typeIndex = 0;
+        } else if (type == T1) {
+          typeIndex = 1;
+        } else if (type == T2) {
+          typeIndex = 2;
+        }
+      }
+    }
     if (typeIndex == null) {
       //try to determine typeIndex by checking value type
-      if (value is T0 || type == T0) {
+      if (value is T0) {
         typeIndex = 0;
-      } else if (value is T1 || type == T1) {
+      } else if (value is T1) {
         typeIndex = 1;
-      } else if (value is T2 || type == T2) {
+      } else if (value is T2) {
         typeIndex = 2;
       }
     }
@@ -101,16 +118,29 @@ abstract class OneOf {
     int? typeIndex,
     Type? type,
   }) {
-    _throwIfInvalidInput(value, typeIndex, type);
+    if (typeIndex == null) {
+      //try to determine typeIndex by checking type
+      if (type != null) {
+        if (type == T0) {
+          typeIndex = 0;
+        } else if (type == T1) {
+          typeIndex = 1;
+        } else if (type == T2) {
+          typeIndex = 2;
+        } else if (type == T3) {
+          typeIndex = 3;
+        }
+      }
+    }
     if (typeIndex == null) {
       //try to determine typeIndex by checking value type
-      if (value is T0 || type == T0) {
+      if (value is T0) {
         typeIndex = 0;
-      } else if (value is T1 || type == T1) {
+      } else if (value is T1) {
         typeIndex = 1;
-      } else if (value is T2 || type == T2) {
+      } else if (value is T2) {
         typeIndex = 2;
-      } else if (value is T3 || type == T3) {
+      } else if (value is T3) {
         typeIndex = 3;
       }
     }
