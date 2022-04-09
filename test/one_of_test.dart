@@ -46,7 +46,7 @@ void main() {
       final value = ClassB();
 
       final res = OneOf.fromValue3<ClassC, ClassB, ClassA>(value: value);
-      expect(res.typeIndex, 2);
+      expect(res.typeIndex, 1);
       expect(res.types, [ClassC, ClassB, ClassA]);
       expect(res.valueType, ClassB);
     });
@@ -78,8 +78,11 @@ void main() {
     });
     test('Nulls are acceptable, if you write them in the type parameters', () {
       final String? value = null;
-      final res = OneOf.fromValue3<String?, num, DateTime>(value: value);
-      expect(res.typeIndex, 0);
+      // ignore: prefer_void_to_null
+      final res = OneOf.fromValue4<String, num, DateTime, Null>(
+        value: value,
+      );
+      expect(res.typeIndex, 3);
       //there is no way in dart to get a nullable Type instance
       // expect(res.types, [String?, num, DateTime]);
       // expect(res.valueType, String?);
@@ -115,4 +118,16 @@ void main() {
       );
     });
   });
+
+  // group('test nesting', () {
+  //   test('3 nested', () {
+  //     final value = Int8List.fromList([10, 20]);
+
+  //     final res = OneOf.fromValue3<String, num, OneOf2<DateTime, Int8List>>(
+  //         value: value);
+  //     expect(res.typeIndex, 0);
+  //     expect(res.types, [String, num, DateTime]);
+  //     expect(res.valueType, String);
+  //   });
+  // });
 }

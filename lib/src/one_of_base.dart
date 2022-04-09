@@ -1,8 +1,10 @@
 import 'one_of_1.dart';
-
 import 'one_of_2.dart';
 import 'one_of_3.dart';
 import 'one_of_4.dart';
+import 'one_of_5.dart';
+import 'one_of_6.dart';
+import 'one_of_7.dart';
 
 abstract class OneOf {
   /// the actual value, accepts null
@@ -15,6 +17,8 @@ abstract class OneOf {
 
   /// all available types to choose from
   List<Type> get types;
+
+  bool get isNull => value == null;
 
   /// all available types to choose from
   Type get valueType => types[typeIndex];
@@ -50,6 +54,39 @@ abstract class OneOf {
     }
   }
 
+  static int? _guessTypeIndex({
+    int? typeIndex,
+    Type? type,
+    required Object? value,
+    required List<Type> types,
+  }) {
+    if (typeIndex == null) {
+      //try to determine typeIndex by checking type
+      if (type != null) {
+        final _t = types.indexWhere((t) => t == type);
+        if (_t >= 0) {
+          typeIndex = _t;
+        }
+      }
+    }
+    //Needs optimization, doing it manually for each case is faster than using reflection
+    // if (typeIndex == null) {
+    //   int _t;
+    //   if (value == null) {
+    //     _t = types.indexWhere((t) => t == Null);
+    //   } else {
+    //     final allTypesReflected = types.map((e) => reflectClass(e)).toList();
+    //     final reflected = reflect(value);
+    //     final reflectedType = reflected.type;
+    //     _t = allTypesReflected.indexWhere((t) => reflectedType.isSubtypeOf(t));
+    //   }
+    //   if (_t >= 0) {
+    //     typeIndex = _t;
+    //   }
+    // }
+    return typeIndex;
+  }
+
   //constructors
   static OneOf1<T0> fromValue1<T0>({required T0 value}) {
     return OneOf1(value: value);
@@ -60,16 +97,13 @@ abstract class OneOf {
     int? typeIndex,
     Type? type,
   }) {
-    if (typeIndex == null) {
-      //try to determine typeIndex by checking type
-      if (type != null) {
-        if (type == T0) {
-          typeIndex = 0;
-        } else if (type == T1) {
-          typeIndex = 1;
-        }
-      }
-    }
+    typeIndex = _guessTypeIndex(
+      types: [T0, T1],
+      type: type,
+      typeIndex: typeIndex,
+      value: value,
+    );
+
     if (typeIndex == null) {
       //try to determine typeIndex by checking value type
       if (value is T0) {
@@ -87,18 +121,12 @@ abstract class OneOf {
     int? typeIndex,
     Type? type,
   }) {
-    if (typeIndex == null) {
-      //try to determine typeIndex by checking type
-      if (type != null) {
-        if (type == T0) {
-          typeIndex = 0;
-        } else if (type == T1) {
-          typeIndex = 1;
-        } else if (type == T2) {
-          typeIndex = 2;
-        }
-      }
-    }
+    typeIndex = _guessTypeIndex(
+      types: [T0, T1, T2],
+      type: type,
+      typeIndex: typeIndex,
+      value: value,
+    );
     if (typeIndex == null) {
       //try to determine typeIndex by checking value type
       if (value is T0) {
@@ -118,20 +146,12 @@ abstract class OneOf {
     int? typeIndex,
     Type? type,
   }) {
-    if (typeIndex == null) {
-      //try to determine typeIndex by checking type
-      if (type != null) {
-        if (type == T0) {
-          typeIndex = 0;
-        } else if (type == T1) {
-          typeIndex = 1;
-        } else if (type == T2) {
-          typeIndex = 2;
-        } else if (type == T3) {
-          typeIndex = 3;
-        }
-      }
-    }
+    typeIndex = _guessTypeIndex(
+      types: [T0, T1, T2, T3],
+      type: type,
+      typeIndex: typeIndex,
+      value: value,
+    );
     if (typeIndex == null) {
       //try to determine typeIndex by checking value type
       if (value is T0) {
@@ -146,5 +166,99 @@ abstract class OneOf {
     }
     _throwIfFailedAttempt(typeIndex);
     return OneOf4(value: value, typeIndex: typeIndex!);
+  }
+
+  static OneOf5<T0, T1, T2, T3, T4> fromValue5<T0, T1, T2, T3, T4>({
+    required Object? value,
+    int? typeIndex,
+    Type? type,
+  }) {
+    typeIndex = _guessTypeIndex(
+      types: [T0, T1, T2, T3, T4],
+      type: type,
+      typeIndex: typeIndex,
+      value: value,
+    );
+    if (typeIndex == null) {
+      //try to determine typeIndex by checking value type
+      if (value is T0) {
+        typeIndex = 0;
+      } else if (value is T1) {
+        typeIndex = 1;
+      } else if (value is T2) {
+        typeIndex = 2;
+      } else if (value is T3) {
+        typeIndex = 3;
+      } else if (value is T4) {
+        typeIndex = 4;
+      }
+    }
+    _throwIfFailedAttempt(typeIndex);
+    return OneOf5(value: value, typeIndex: typeIndex!);
+  }
+
+  static OneOf6<T0, T1, T2, T3, T4, T5> fromValue6<T0, T1, T2, T3, T4, T5>({
+    required Object? value,
+    int? typeIndex,
+    Type? type,
+  }) {
+    typeIndex = _guessTypeIndex(
+      types: [T0, T1, T2, T3, T4, T5],
+      type: type,
+      typeIndex: typeIndex,
+      value: value,
+    );
+    if (typeIndex == null) {
+      //try to determine typeIndex by checking value type
+      if (value is T0) {
+        typeIndex = 0;
+      } else if (value is T1) {
+        typeIndex = 1;
+      } else if (value is T2) {
+        typeIndex = 2;
+      } else if (value is T3) {
+        typeIndex = 3;
+      } else if (value is T4) {
+        typeIndex = 4;
+      } else if (value is T5) {
+        typeIndex = 5;
+      }
+    }
+    _throwIfFailedAttempt(typeIndex);
+    return OneOf6(value: value, typeIndex: typeIndex!);
+  }
+
+  static OneOf7<T0, T1, T2, T3, T4, T5, T6>
+      fromValue7<T0, T1, T2, T3, T4, T5, T6>({
+    required Object? value,
+    int? typeIndex,
+    Type? type,
+  }) {
+    typeIndex = _guessTypeIndex(
+      types: [T0, T1, T2, T3, T4, T5, T6],
+      type: type,
+      typeIndex: typeIndex,
+      value: value,
+    );
+    if (typeIndex == null) {
+      //try to determine typeIndex by checking value type
+      if (value is T0) {
+        typeIndex = 0;
+      } else if (value is T1) {
+        typeIndex = 1;
+      } else if (value is T2) {
+        typeIndex = 2;
+      } else if (value is T3) {
+        typeIndex = 3;
+      } else if (value is T4) {
+        typeIndex = 4;
+      } else if (value is T5) {
+        typeIndex = 5;
+      } else if (value is T6) {
+        typeIndex = 6;
+      }
+    }
+    _throwIfFailedAttempt(typeIndex);
+    return OneOf7(value: value, typeIndex: typeIndex!);
   }
 }

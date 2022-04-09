@@ -1,6 +1,6 @@
 name: one_of
 description: c#-like OneOf inspired from https://github.com/mcintyre321/OneOf
-version: 0.0.1-beta
+version: 0.0.2-beta
 homepage: https://github.com/Bdaya-Dev/dart-valueof
 
 environment:
