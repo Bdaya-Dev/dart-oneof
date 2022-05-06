@@ -1,3 +1,8 @@
+## 1.0.0 (6 May 2022)
+
+- Added `OneOfDynamic`
+- Lowered sdk constraints
+
 ## 0.0.2-beta
 
 - Added more oneOf parameters up to 7
