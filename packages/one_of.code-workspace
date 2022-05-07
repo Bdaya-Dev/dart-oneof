@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "one_of"
+		},
+		{
+			"path": "one_of_serializer"
+		},
+		{
+			"path": "one_of_serializer_tests"
+		}
+	],
+	"settings": {}
+}

@@ -33,13 +33,12 @@ abstract class OneOf {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is OneOf &&
-          //this ensures the same type parameters, which means the same typeIndex
-          //unless types extending each other are used, which is a problem left for the implementer
-          runtimeType == other.runtimeType &&
+          types.length == other.types.length &&
+          typeIndex == other.typeIndex &&
           value == other.value;
 
   @override
-  int get hashCode => value.hashCode;
+  int get hashCode => value.hashCode ^ typeIndex.hashCode;
 
   /// returns value.toString()
   @override

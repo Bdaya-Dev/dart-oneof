@@ -1,0 +1,22 @@
+name: one_of_serializer_tests
+description: Tests for built_value_serializer
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=2.16.2 <3.0.0'
+
+
+dependencies:
+  built_value: ^8.2.3
+  one_of: 
+  one_of_serializer: 
+    path: ../one_of_serializer
+dependency_overrides: 
+  one_of:    
+    path: ../one_of
+dev_dependencies:
+  lints: ^1.0.0
+  test: ^1.16.0
+  built_value_generator: ^8.2.3
+  build_runner: '>=1.0.0 <3.0.0'
