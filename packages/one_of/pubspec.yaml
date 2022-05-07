@@ -1,6 +1,6 @@
 name: one_of
 description: c#-like OneOf inspired from https://github.com/mcintyre321/OneOf
-version: 1.1.0
+version: 1.2.0
 homepage: https://github.com/Bdaya-Dev/dart-oneof
 
 environment:
