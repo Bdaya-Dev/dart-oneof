@@ -9,6 +9,8 @@ import 'package:built_value/json_object.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:built_value/iso_8601_date_time_serializer.dart';
+import 'package:one_of_serializer/any_of_serializer.dart';
+import 'models/fruit_any.dart';
 import 'models/apple.dart';
 import 'models/banana.dart';
 import 'models/fruit.dart';
@@ -20,9 +22,11 @@ part 'serializers.g.dart';
   Apple,
   Banana,
   Fruit,
+  FruitAny,
 ])
 Serializers serializers = (_$serializers.toBuilder()
       ..add(const OneOfSerializer())
+      ..add(const AnyOfSerializer())
       ..add(Iso8601DateTimeSerializer()))
     .build();
 
