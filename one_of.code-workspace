@@ -1,0 +1,27 @@
+{
+	"folders": [
+		{
+			"path": "one_of",
+			"name": "oneOf"
+		},
+		{
+			"path": "one_of_serializer",
+			"name": "Serializer"
+		},
+		{
+			"path": "one_of_serializer_tests",
+			"name": "Serializer Tests",			
+		},
+		{
+			"path": ".",
+			"name": "Root"
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"one_of": true,
+			"one_of_serializer": true,
+			"one_of_serializer_tests": true,
+		},
+	}
+}
