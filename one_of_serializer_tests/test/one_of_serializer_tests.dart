@@ -2,6 +2,7 @@ import 'package:built_value/serializer.dart';
 import 'package:one_of/one_of.dart';
 import 'package:one_of_serializer_tests/one_of_serializer_tests.dart';
 import 'package:one_of_serializer_tests/src/models/one_of_primitives.dart';
+import 'package:one_of_serializer_tests/src/models/one_of_primitives_or_class.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -111,7 +112,7 @@ void main() {
       });
     });
 
-    group('Primitives', () {
+    group('Pure Primitives', () {
       final obj = OneOfPrimitivesBuilder();
 
       group('as String (first)', () {
@@ -154,6 +155,61 @@ void main() {
           final deserialized = standardSerializers.deserialize(
             intValue,
             specifiedType: FullType(OneOfPrimitives),
+          );
+          expect(deserialized, obj.build());
+        });
+      });
+    });
+
+    group('Impure Primitives', () {
+      final obj = OneOfPrimitivesOrClassBuilder();
+
+      group('as String (first)', () {
+        const strValue = 'Hello world';
+        setUp(() {
+          obj.oneOf = OneOf2<String, Apple>(value: strValue, typeIndex: 0);
+        });
+
+        test('Serialization', () {
+          final serialized = standardSerializers.serialize(
+            obj.build(),
+            specifiedType: FullType(OneOfPrimitivesOrClass),
+          );
+          expect(serialized, strValue);
+        });
+
+        test('Deserialization', () {
+          final deserialized = standardSerializers.deserialize(
+            strValue,
+            specifiedType: FullType(OneOfPrimitivesOrClass),
+          );
+          expect(deserialized, obj.build());
+        });
+      });
+
+      group('as Apple (second)', () {
+        final appleB = AppleBuilder();
+        const appleS = {
+          'kind': 'Staging Apple',
+        };
+        setUp(() {
+          appleB.kind = 'Staging Apple';
+          obj.oneOf =
+              OneOf2<String, Apple>(value: appleB.build(), typeIndex: 1);
+        });
+
+        test('Serialization', () {
+          final serialized = standardSerializers.serialize(
+            obj.build(),
+            specifiedType: FullType(OneOfPrimitivesOrClass),
+          );
+          expect(serialized, appleS);
+        });
+
+        test('Deserialization', () {
+          final deserialized = standardSerializers.deserialize(
+            appleS,
+            specifiedType: FullType(OneOfPrimitivesOrClass),
           );
           expect(deserialized, obj.build());
         });
