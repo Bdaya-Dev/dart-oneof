@@ -20,7 +20,7 @@ abstract class OneOf {
 
   bool get isNull => value == null;
 
-  /// all available types to choose from
+  /// exact value type
   Type get valueType => types[typeIndex];
 
   /// checks if [typeIndex] is equal to input index
@@ -38,7 +38,7 @@ abstract class OneOf {
           value == other.value;
 
   @override
-  int get hashCode => value.hashCode ^ typeIndex.hashCode;
+  int get hashCode => Object.hash(value, typeIndex);
 
   /// returns value.toString()
   @override

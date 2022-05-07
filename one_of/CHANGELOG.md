@@ -1,3 +1,7 @@
+## 1.3.0 (7 May 2022)
+
+- Added AnyOf
+
 ## 1.2.0 (7 May 2022)
 
 - Changed equality comparison 

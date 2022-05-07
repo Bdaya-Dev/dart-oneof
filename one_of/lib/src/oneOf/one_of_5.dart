@@ -1,7 +1,7 @@
-import 'package:one_of/one_of.dart';
+import 'one_of_base.dart';
 
-class OneOf6<T0, T1, T2, T3, T4, T5> extends OneOf {
-  OneOf6({
+class OneOf5<T0, T1, T2, T3, T4> extends OneOf {
+  OneOf5({
     required this.value,
     required this.typeIndex,
   });
@@ -14,10 +14,9 @@ class OneOf6<T0, T1, T2, T3, T4, T5> extends OneOf {
   T2 get asT2 => value as T2;
   T3 get asT3 => value as T3;
   T4 get asT4 => value as T4;
-  T5 get asT5 => value as T5;
 
   @override
-  List<Type> get types => [T0, T1, T2, T3, T4, T5];
+  List<Type> get types => [T0, T1, T2, T3, T4];
 
   @override
   final Object? value;

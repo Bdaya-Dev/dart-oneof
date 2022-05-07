@@ -1,4 +1,4 @@
-import 'package:one_of/one_of.dart';
+import 'one_of_base.dart';
 
 class OneOf4<T0, T1, T2, T3> extends OneOf {
   OneOf4({
