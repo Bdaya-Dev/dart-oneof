@@ -63,11 +63,8 @@ class OneOfSerializer implements PrimitiveSerializer<OneOf> {
   Object serialize(Serializers serializers, OneOf object,
       {FullType specifiedType = FullType.unspecified}) {
     //serialize the value
-    final valueSerialized = serializers.serialize(object.value);
-    if (valueSerialized is Iterable) {
-      //was a json object, skip first element
-      return valueSerialized.skip(1);
-    }
+    final valueSerialized = serializers.serialize(object.value,
+        specifiedType: specifiedType.parameters[object.typeIndex]);
     return valueSerialized!;
   }
 }

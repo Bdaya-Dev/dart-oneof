@@ -60,10 +60,15 @@ class AnyOfSerializer implements PrimitiveSerializer<AnyOf> {
       final typeIndex = valueEntry.key;
       final type = object.types[typeIndex];
       final value = valueEntry.value;
-
-      final serialized = serializers.serialize(value);
-      if (serialized is Iterable) {
-        result.addAll(serialized.skip(1));
+      final serialized = serializers.serialize(
+        value,
+        specifiedType: specifiedType.parameters[typeIndex],
+      );
+      if (serialized is Map) {
+        for (var e in serialized.entries) {
+          result.add(e.key);
+          result.add(e.value);
+        }
       } else {
         //primitive, return it
         return serialized!;

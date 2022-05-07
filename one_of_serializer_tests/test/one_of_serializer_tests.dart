@@ -1,5 +1,7 @@
+import 'package:built_value/serializer.dart';
 import 'package:one_of/one_of.dart';
 import 'package:one_of_serializer_tests/one_of_serializer_tests.dart';
+import 'package:one_of_serializer_tests/src/models/one_of_primitives.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -7,6 +9,10 @@ void main() {
     group('as Banana', () {
       final fruitB = FruitBuilder();
       final bananaB = BananaBuilder();
+      const fruitS = {
+        'color': 'Red',
+        'count': 5,
+      };
       setUp(() {
         bananaB.count = 5;
 
@@ -19,14 +25,18 @@ void main() {
       });
 
       test('Serialization', () {
-        final serialized = serializers.serialize(fruitB.build());
-        final expected = ['Fruit', 'color', 'Red', 'count', 5];
-        expect(serialized, expected);
+        final serialized = standardSerializers.serialize(
+          fruitB.build(),
+          specifiedType: FullType(Fruit),
+        );
+        expect(serialized, fruitS);
       });
 
       test('Deserialization', () {
-        final serialized = ['Fruit', 'color', 'Red', 'count', 5];
-        final deserialized = serializers.deserialize(serialized);
+        final deserialized = standardSerializers.deserialize(
+          fruitS,
+          specifiedType: FullType(Fruit),
+        );
         expect(deserialized, fruitB.build());
       });
     });
@@ -34,6 +44,10 @@ void main() {
     group('as Apple', () {
       final fruitB = FruitBuilder();
       final appleB = AppleBuilder();
+      const fruitS = {
+        'color': 'Red',
+        'kind': 'Local Apple',
+      };
       setUp(() {
         appleB.kind = 'Local Apple';
 
@@ -46,14 +60,18 @@ void main() {
       });
 
       test('Serialization', () {
-        final serialized = serializers.serialize(fruitB.build());
-        final expected = ['Fruit', 'color', 'Red', 'kind', 'Local Apple'];
-        expect(serialized, expected);
+        final serialized = standardSerializers.serialize(
+          fruitB.build(),
+          specifiedType: FullType(Fruit),
+        );
+        expect(serialized, fruitS);
       });
 
       test('Deserialization', () {
-        final serialized = ['Fruit', 'color', 'Red', 'kind', 'Local Apple'];
-        final deserialized = serializers.deserialize(serialized);
+        final deserialized = standardSerializers.deserialize(
+          fruitS,
+          specifiedType: FullType(Fruit),
+        );
         expect(deserialized, fruitB.build());
       });
     });
@@ -61,6 +79,10 @@ void main() {
     group('OneOf2 as Banana', () {
       final fruitB = FruitBuilder();
       final bananaB = BananaBuilder();
+      const fruitS = {
+        'color': 'Red',
+        'count': 5,
+      };
       setUp(() {
         bananaB.count = 5;
 
@@ -72,15 +94,69 @@ void main() {
       });
 
       test('Serialization', () {
-        final serialized = serializers.serialize(fruitB.build());
-        final expected = ['Fruit', 'color', 'Red', 'count', 5];
-        expect(serialized, expected);
+        final serialized = standardSerializers.serialize(
+          fruitB.build(),
+          specifiedType: FullType(Fruit),
+        );
+
+        expect(serialized, fruitS);
       });
 
       test('Deserialization', () {
-        final serialized = ['Fruit', 'color', 'Red', 'count', 5];
-        final deserialized = serializers.deserialize(serialized);
+        final deserialized = standardSerializers.deserialize(
+          fruitS,
+          specifiedType: FullType(Fruit),
+        );
         expect(deserialized, fruitB.build());
+      });
+    });
+
+    group('Primitives', () {
+      final obj = OneOfPrimitivesBuilder();
+
+      group('as String (first)', () {
+        const strValue = 'Hello world';
+        setUp(() {
+          obj.oneOf = OneOf2<String, int>(value: strValue, typeIndex: 0);
+        });
+
+        test('Serialization', () {
+          final serialized = standardSerializers.serialize(
+            obj.build(),
+            specifiedType: FullType(OneOfPrimitives),
+          );
+          expect(serialized, strValue);
+        });
+
+        test('Deserialization', () {
+          final deserialized = standardSerializers.deserialize(
+            strValue,
+            specifiedType: FullType(OneOfPrimitives),
+          );
+          expect(deserialized, obj.build());
+        });
+      });
+      group('as int (second)', () {
+        const intValue = 21;
+        setUp(() {
+          obj.oneOf = OneOf2<String, int>(value: intValue, typeIndex: 1);
+        });
+
+        test('Serialization', () {
+          final serialized = standardSerializers.serialize(
+            obj.build(),
+            specifiedType: FullType(OneOfPrimitives),
+          );
+          expect(serialized, intValue);
+        });
+
+        test('Deserialization', () {
+          final deserialized = standardSerializers.deserialize(
+            intValue,
+            specifiedType: FullType(OneOfPrimitives),
+          );
+          expect(deserialized, obj.build());
+        });
       });
     });
   });

@@ -58,10 +58,15 @@ class _$FruitSerializer implements StructuredSerializer<Fruit> {
         specifiedType:
             FullType(OneOf, oneOf.types.map((e) => FullType(e)).toList()),
       );
-      if (_serialized is! Iterable) {
-        throw UnsupportedError('Impossible case ?');
+      //serialized MUST be map, since Fruit is a json object, not a primitive
+      if (_serialized is! Map) {
+        throw UnsupportedError(
+            'Impossible case, maybe not using StandardJsonPlugin');
       }
-      result.addAll(_serialized);
+      for (var e in _serialized.entries) {
+        result.add(e.key);
+        result.add(e.value);
+      }
     }
     return result;
   }

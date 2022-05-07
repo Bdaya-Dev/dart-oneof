@@ -58,10 +58,14 @@ class _$FruitAnySerializer implements StructuredSerializer<FruitAny> {
         specifiedType:
             FullType(AnyOf, anyOf.types.map((e) => FullType(e)).toList()),
       );
-      if (_serialized is! Iterable) {
-        throw UnsupportedError('Impossible case ?');
+      if (_serialized is! Map) {
+        throw UnsupportedError(
+            'Impossible case, maybe not using StandardJsonPlugin');
       }
-      result.addAll(_serialized);
+      for (var e in _serialized.entries) {
+        result.add(e.key);
+        result.add(e.value);
+      }
     }
     return result;
   }

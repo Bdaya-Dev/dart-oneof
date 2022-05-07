@@ -1,3 +1,4 @@
+import 'package:built_value/serializer.dart';
 import 'package:one_of/any_of.dart';
 import 'package:one_of_serializer_tests/one_of_serializer_tests.dart';
 import 'package:test/test.dart';
@@ -7,6 +8,11 @@ void main() {
     group('as Banana', () {
       final fruitB = FruitAnyBuilder();
       final bananaB = BananaBuilder();
+      const fruitS = {
+        'color': 'Red',
+        'count': 5,
+      };
+
       setUp(() {
         bananaB.count = 5;
 
@@ -18,14 +24,18 @@ void main() {
       });
 
       test('Serialization', () {
-        final serialized = serializers.serialize(fruitB.build());
-        final expected = ['FruitAny', 'color', 'Red', 'count', 5];
-        expect(serialized, expected);
+        final serialized = standardSerializers.serialize(
+          fruitB.build(),
+          specifiedType: FullType(FruitAny),
+        );
+        expect(serialized, fruitS);
       });
 
       test('Deserialization', () {
-        final serialized = ['FruitAny', 'color', 'Red', 'count', 5];
-        final deserialized = serializers.deserialize(serialized);
+        final deserialized = standardSerializers.deserialize(
+          fruitS,
+          specifiedType: FullType(FruitAny),
+        );
         expect(deserialized, fruitB.build());
       });
     });
@@ -33,6 +43,10 @@ void main() {
     group('as Apple', () {
       final fruitB = FruitAnyBuilder();
       final appleB = AppleBuilder();
+      const fruitS = {
+        'color': 'Red',
+        'kind': 'Local Apple',
+      };
       setUp(() {
         appleB.kind = 'Local Apple';
 
@@ -44,14 +58,18 @@ void main() {
       });
 
       test('Serialization', () {
-        final serialized = serializers.serialize(fruitB.build());
-        final expected = ['FruitAny', 'color', 'Red', 'kind', 'Local Apple'];
-        expect(serialized, expected);
+        final serialized = standardSerializers.serialize(
+          fruitB.build(),
+          specifiedType: FullType(FruitAny),
+        );
+        expect(serialized, fruitS);
       });
 
       test('Deserialization', () {
-        final serialized = ['FruitAny', 'color', 'Red', 'kind', 'Local Apple'];
-        final deserialized = serializers.deserialize(serialized);
+        final deserialized = standardSerializers.deserialize(
+          fruitS,
+          specifiedType: FullType(FruitAny),
+        );
         expect(deserialized, fruitB.build());
       });
     });
@@ -59,6 +77,11 @@ void main() {
     group('AnyOf2 as Banana', () {
       final fruitB = FruitAnyBuilder();
       final bananaB = BananaBuilder();
+      const fruitS = {
+        'color': 'Red',
+        'count': 5,
+      };
+
       setUp(() {
         bananaB.count = 5;
 
@@ -69,14 +92,18 @@ void main() {
       });
 
       test('Serialization', () {
-        final serialized = serializers.serialize(fruitB.build());
-        final expected = ['FruitAny', 'color', 'Red', 'count', 5];
-        expect(serialized, expected);
+        final serialized = standardSerializers.serialize(
+          fruitB.build(),
+          specifiedType: FullType(FruitAny),
+        );
+        expect(serialized, fruitS);
       });
 
       test('Deserialization', () {
-        final serialized = ['FruitAny', 'color', 'Red', 'count', 5];
-        final deserialized = serializers.deserialize(serialized);
+        final deserialized = standardSerializers.deserialize(
+          fruitS,
+          specifiedType: FullType(FruitAny),
+        );
         expect(deserialized, fruitB.build());
       });
     });
@@ -85,6 +112,12 @@ void main() {
       final fruitB = FruitAnyBuilder();
       final bananaB = BananaBuilder();
       final appleB = AppleBuilder();
+      const fruitS = {
+        'color': 'Red',
+        'kind': 'Remote Apple',
+        'count': 10,
+      };
+
       setUp(() {
         bananaB.count = 10;
         appleB.kind = 'Remote Apple';
@@ -98,30 +131,19 @@ void main() {
       });
 
       test('Serialization', () {
-        final serialized = serializers.serialize(fruitB.build());
-        final expected = [
-          'FruitAny',
-          'color',
-          'Red',
-          'kind',
-          'Remote Apple',
-          'count',
-          10
-        ];
-        expect(serialized, expected);
+        final serialized = standardSerializers.serialize(
+          fruitB.build(),
+          specifiedType: FullType(FruitAny),
+        );
+
+        expect(serialized, fruitS);
       });
 
       test('Deserialization', () {
-        final serialized = [
-          'FruitAny',
-          'color',
-          'Red',
-          'kind',
-          'Remote Apple',
-          'count',
-          10
-        ];
-        final deserialized = serializers.deserialize(serialized);
+        final deserialized = standardSerializers.deserialize(
+          fruitS,
+          specifiedType: FullType(FruitAny),
+        );
         expect(deserialized, fruitB.build());
       });
     });

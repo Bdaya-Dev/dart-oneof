@@ -16,6 +16,9 @@ import 'models/banana.dart';
 import 'models/fruit.dart';
 import 'package:one_of_serializer/one_of_serializer.dart';
 
+import 'models/one_of_primitives.dart';
+import 'models/one_of_primitives_or_class.dart';
+
 part 'serializers.g.dart';
 
 @SerializersFor([
@@ -23,6 +26,8 @@ part 'serializers.g.dart';
   Banana,
   Fruit,
   FruitAny,
+  OneOfPrimitives,
+  OneOfPrimitivesOrClass,
 ])
 Serializers serializers = (_$serializers.toBuilder()
       ..add(const OneOfSerializer())
