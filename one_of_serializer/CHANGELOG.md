@@ -1,3 +1,11 @@
+## 1.5.0 (10 May 2022)
+
+- Sync versions with main package
+
+## 1.4.1
+
+- Lowered built_value restrictions
+
 ## 1.4.0
 
 - Fixed serializer to use json

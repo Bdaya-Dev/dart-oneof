@@ -46,14 +46,6 @@ class _$OneOfPrimitivesOrClassSerializer
   @override
   Object serialize(Serializers serializers, OneOfPrimitivesOrClass object,
       {FullType specifiedType = FullType.unspecified}) {
-    // final result = <Object?>[];
-    // if (object.color != null) {
-    //   result
-    //     ..add(r'color')
-    //     ..add(serializers.serialize(object.color,
-    //         specifiedType: const FullType(String)));
-    // }
-
     final oneOf = object.oneOf;
     if (oneOf != null) {
       final _serialized = serializers.serialize(
@@ -61,10 +53,6 @@ class _$OneOfPrimitivesOrClassSerializer
         specifiedType:
             FullType(OneOf, oneOf.types.map((e) => FullType(e)).toList()),
       );
-      //only if all are primitives
-      // if (_serialized is Iterable) {
-      //   return _serialized.last;
-      // }
       return _serialized!;
     }
     throw UnsupportedError("Couldn't serialize oneOf");
@@ -75,24 +63,6 @@ class _$OneOfPrimitivesOrClassSerializer
   OneOfPrimitivesOrClass deserialize(Serializers serializers, Object serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final resultB = OneOfPrimitivesOrClassBuilder();
-
-    // final unhandled = <Object?>[];
-    // for (var i = 0; i < serializedList.length; i += 2) {
-    //   final key = serializedList[i] as String;
-    //   final value = serializedList[i + 1];
-
-    //   switch (key) {
-    //     // case r'color':
-    //     //   final valueDes = serializers.deserialize(value,
-    //     //       specifiedType: const FullType(String)) as String;
-    //     //   resultB.color = valueDes;
-    //     //   break;
-    //     default:
-    //       unhandled.add(key);
-    //       unhandled.add(value);
-    //       break;
-    //   }
-    // }
     resultB.oneOf = serializers.deserialize(serialized,
             specifiedType: FullType(OneOf, [FullType(String), FullType(Apple)]))
         as OneOf;

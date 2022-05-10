@@ -33,7 +33,7 @@ abstract class Fruit implements Built<Fruit, FruitBuilder> {
   static Serializer<Fruit> get serializer => _$FruitSerializer();
 }
 
-class _$FruitSerializer implements StructuredSerializer<Fruit> {
+class _$FruitSerializer implements PrimitiveSerializer<Fruit> {
   @override
   final Iterable<Type> types = const [Fruit, _$Fruit];
 
@@ -41,7 +41,7 @@ class _$FruitSerializer implements StructuredSerializer<Fruit> {
   final String wireName = r'Fruit';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, Fruit object,
+  Object serialize(Serializers serializers, Fruit object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[];
     if (object.color != null) {
@@ -72,10 +72,10 @@ class _$FruitSerializer implements StructuredSerializer<Fruit> {
   }
 
   @override
-  Fruit deserialize(Serializers serializers, Iterable<Object?> serialized,
+  Fruit deserialize(Serializers serializers, Object serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final resultB = FruitBuilder();
-    final serializedList = serialized.toList();
+    final serializedList = (serialized as Iterable<Object?>).toList();
     final unhandled = <Object?>[];
     for (var i = 0; i < serializedList.length; i += 2) {
       final key = serializedList[i] as String;

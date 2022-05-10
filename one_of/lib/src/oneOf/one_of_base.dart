@@ -1,3 +1,5 @@
+import 'package:collection/equality.dart';
+
 import 'one_of_1.dart';
 import 'one_of_2.dart';
 import 'one_of_3.dart';
@@ -5,6 +7,7 @@ import 'one_of_4.dart';
 import 'one_of_5.dart';
 import 'one_of_6.dart';
 import 'one_of_7.dart';
+import 'package:quiver/core.dart';
 
 abstract class OneOf {
   /// the actual value, accepts null
@@ -33,12 +36,12 @@ abstract class OneOf {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is OneOf &&
-          types.length == other.types.length &&
+          ListEquality<Type>().equals(types, other.types) &&
           typeIndex == other.typeIndex &&
           value == other.value;
 
   @override
-  int get hashCode => Object.hash(value, typeIndex);
+  int get hashCode => hash2(value, typeIndex);
 
   /// returns value.toString()
   @override

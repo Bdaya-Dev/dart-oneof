@@ -1,3 +1,7 @@
+## 1.5.0 (10 May 2022)
+
+- Removed Object.hash and used quiver hash instead
+
 ## 1.3.0 (7 May 2022)
 
 - Added AnyOf

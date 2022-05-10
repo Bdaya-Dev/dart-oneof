@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:quiver/core.dart';
 
 abstract class AnyOf {
   /// the actual values, accepts null
@@ -28,7 +29,7 @@ abstract class AnyOf {
           ListEquality<Type>().equals(types, other.types);
 
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => hash2(
         MapEquality<int, Object?>().hash(values),
         ListEquality<Type>().hash(types),
       );

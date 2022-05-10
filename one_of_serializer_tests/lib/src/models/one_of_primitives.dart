@@ -70,24 +70,6 @@ class _$OneOfPrimitivesSerializer
   OneOfPrimitives deserialize(Serializers serializers, Object serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final resultB = OneOfPrimitivesBuilder();
-
-    // final unhandled = <Object?>[];
-    // for (var i = 0; i < serializedList.length; i += 2) {
-    //   final key = serializedList[i] as String;
-    //   final value = serializedList[i + 1];
-
-    //   switch (key) {
-    //     // case r'color':
-    //     //   final valueDes = serializers.deserialize(value,
-    //     //       specifiedType: const FullType(String)) as String;
-    //     //   resultB.color = valueDes;
-    //     //   break;
-    //     default:
-    //       unhandled.add(key);
-    //       unhandled.add(value);
-    //       break;
-    //   }
-    // }
     resultB.oneOf = serializers.deserialize(serialized,
             specifiedType: FullType(OneOf, [FullType(String), FullType(int)]))
         as OneOf;
