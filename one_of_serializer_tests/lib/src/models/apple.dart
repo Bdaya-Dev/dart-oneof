@@ -19,7 +19,7 @@ abstract class Apple implements Built<Apple, AppleBuilder> {
 
   Apple._();
 
-  factory Apple([void updates(AppleBuilder b)]) = _$Apple;
+  factory Apple([void Function(AppleBuilder b) updates]) = _$Apple;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(AppleBuilder b) => b;

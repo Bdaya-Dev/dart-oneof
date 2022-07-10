@@ -1,4 +1,4 @@
-import 'package:collection/equality.dart';
+import 'package:collection/collection.dart';
 
 import 'one_of_1.dart';
 import 'one_of_2.dart';
