@@ -18,7 +18,7 @@ class AnyOfSerializer implements PrimitiveSerializer<AnyOf> {
       ];
 
   @override
-  String get wireName => 'OneOf';
+  String get wireName => 'AnyOf';
 
   @override
   AnyOf deserialize(Serializers serializers, Object serialized,
