@@ -6,16 +6,16 @@ class OneOfSerializer implements PrimitiveSerializer<OneOf> {
 
   @override
   Iterable<Type> get types => [
-        OneOf,
-        OneOfDynamic,
-        OneOf1,
-        OneOf2,
-        OneOf3,
-        OneOf4,
-        OneOf5,
-        OneOf6,
-        OneOf7
-      ];
+    OneOf,
+    OneOfDynamic,
+    OneOf1,
+    OneOf2,
+    OneOf3,
+    OneOf4,
+    OneOf5,
+    OneOf6,
+    OneOf7
+  ];
 
   @override
   String get wireName => 'OneOf';
@@ -45,8 +45,20 @@ class OneOfSerializer implements PrimitiveSerializer<OneOf> {
     }
 
     if (matches.length > 1) {
-      throw UnsupportedError(
-          'more than one match found: ${matches.map((e) => specifiedType.parameters[e])}');
+      // Ambiguous match (e.g. oneOf: [integer, number] for a JSON number
+      // without a decimal point, which both int and double deserializers
+      // accept). Prefer double over int rather than throwing.
+      final doubleIndex = types.indexWhere((t) => t == double);
+      if (doubleIndex >= 0 && matches.contains(doubleIndex)) {
+        typeIndex = doubleIndex;
+        value = serializers.deserialize(
+          serialized,
+          specifiedType: specifiedType.parameters[doubleIndex],
+        );
+      } else {
+        throw UnsupportedError(
+            'more than one match found: ${matches.map((e) => specifiedType.parameters[e])}');
+      }
     }
     if (typeIndex == null) {
       throw UnsupportedError(
